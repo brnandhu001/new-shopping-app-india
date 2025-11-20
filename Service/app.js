@@ -43,9 +43,11 @@ app.use((err, req, res, next) => {
     message: err.message || "Internal Server Error",
   });
 });
+//for local testing
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
-module.exports = app;
+//export for serverless deployment
+// module.exports = app;
 
