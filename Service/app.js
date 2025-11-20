@@ -1,6 +1,10 @@
 const express = require('express');
 const connectDB = require('./config/db');
 require('dotenv').config();
+const cors = require("cors");
+
+
+
 
 const app = express();
 const port = 3000;
@@ -10,6 +14,12 @@ connectDB();
 
 // Body parser
 app.use(express.json());
+
+// allow frontend access
+app.use(cors({
+  origin: "http://localhost:5173",  // your React URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 
 // Routes
 app.use('/api/users', require('./routes/userRoutes'));
