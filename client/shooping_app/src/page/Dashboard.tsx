@@ -37,7 +37,7 @@ function Dashboard() {
 
   // Fetch products from API using Redux
   useEffect(() => {
-    dispatch(fetchProducts(page, limit, sortField, sortOrder));
+    dispatch(fetchProducts({ page, limit, sortField, sortOrder }));
   }, [dispatch, page, limit, sortField, sortOrder]);
 
   const openAddModal = () => {

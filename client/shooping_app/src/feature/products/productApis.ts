@@ -3,19 +3,21 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 
-
 export const fetchProducts = createAsyncThunk(
   "products/fetch",
-  async (params: { page: number; limit: number; sortField: string; sortOrder: string }) => {
-    const { page, limit, sortField, sortOrder } = params;
+  async (
+    { page, limit, sortField, sortOrder }: 
+    { page: number; limit: number; sortField: string; sortOrder: string }
+  ) => {
 
-    const res = await api.get(
-      `/products?page=${page}&limit=${limit}&sort=${sortField}&order=${sortOrder}`
-    );
+    const response = await api.get("/products", {
+      params: { page, limit, sort: sortField, order: sortOrder },
+    });
 
-    return res.data; // <-- IMPORTANT
+    return response.data;
   }
 );
+
 
 export const addProduct = createAsyncThunk(
   "products/add",
