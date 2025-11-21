@@ -46,25 +46,25 @@ function Dashboard() {
     setIsModalOpen(true);
   };
 
-  const handleAddProduct = (data: any) => {
-    dispatch(
-      addProduct(data, () => {
-        setIsModalOpen(false);
-        dispatch(fetchProducts(page, limit, sortField, sortOrder));
-      })
-    );
-  };
+const handleAddProduct = (data: any) => {
+  dispatch(addProduct({ data }))
+    .unwrap()
+    .then(() => {
+      setIsModalOpen(false); // Close modal
+      dispatch(fetchProducts({ page, limit, sortField, sortOrder }));
+    });
+};
 
-  const handleUpdateProduct = (data: any) => {
-    if (!selectedProduct) return;
 
-    dispatch(
-      updateProduct(selectedProduct._id, data, () => {
-        setIsModalOpen(false);
-        dispatch(fetchProducts(page, limit, sortField, sortOrder));
-      })
-    );
-  };
+const handleUpdateProduct = (data: any) => {
+  dispatch(updateProduct({ id: selectedProduct._id, data }))
+    .unwrap()
+    .then(() => {
+      setIsModalOpen(false);
+      dispatch(fetchProducts({ page, limit, sortField, sortOrder }));
+    });
+};
+
 
   const openEditModal = (product: any) => {
     setModalType("edit");
@@ -78,16 +78,15 @@ function Dashboard() {
     setIsModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    if (!selectedProduct) return;
+const handleDeleteConfirm = () => {
+  dispatch(deleteProduct(selectedProduct._id))
+    .unwrap()
+    .then(() => {
+      setIsModalOpen(false);
+      dispatch(fetchProducts({ page, limit, sortField, sortOrder }));
+    });
+};
 
-    dispatch(
-      deleteProduct(selectedProduct._id, () => {
-        setIsModalOpen(false);
-        dispatch(fetchProducts(page, limit, sortField, sortOrder));
-      })
-    );
-  };
 
   const handleSort = (field: string) => {
     if (sortField === field) {
