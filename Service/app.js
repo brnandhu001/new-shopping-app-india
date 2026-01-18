@@ -22,6 +22,7 @@ app.use(cors({
 
 // 🔓 PUBLIC ROUTES (No login required)
 app.use('/api/users', require('./routes/userRoutes'));
+app.use("/api/cart", auth, require("./routes/cartRoutes"));
 
 
 // 🔐 PROTECTED ROUTES (Require JWT)
